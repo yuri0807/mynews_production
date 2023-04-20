@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get(‘XXX’, 'AAAcontroller@bbb');
+Route::get('admin/profile/create', 'ProfileController@edit');
