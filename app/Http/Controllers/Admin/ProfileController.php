@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Models\Profile;
 
+use App\Models\History_profile;
+use Carbon\Carbon;
+
 class ProfileController extends Controller
 {
     //
@@ -22,6 +25,8 @@ class ProfileController extends Controller
 
         $profile = new Profile;
         $form = $request->all();
+        
+        unset($form['_token']);
         
         $profile->fill($form);
         $profile->save();
@@ -48,9 +53,16 @@ class ProfileController extends Controller
         $profile = Profile::find($request->id);
         // 送信されてきたフォームデータを格納する
         $profile_form = $request->all();
-        
+        unset($profile_form['_token']);
+         
         // 該当するデータを上書きして保存する
         $profile->fill($profile_form)->save();
+        
+        // 以下を追記
+        $History_profile = new History_profile();
+        $History_profile->History_profile_id = $profile->id;
+        $History_profile->edited_at = Carbon::now();
+        $History_profile->save();
 
         return redirect('admin/profile');
     }
