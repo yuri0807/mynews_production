@@ -11,6 +11,9 @@ body {
   height: 82px;
 }
 
+.headline {
+  margin-top: 50px;
+}
 .headline .caption {
   position: relative;
   width: 350px;

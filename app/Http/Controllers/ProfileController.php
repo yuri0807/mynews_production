@@ -13,14 +13,10 @@ class ProfileController extends Controller
     {
         $profiles = Profile::all()->sortByDesc('updated_at');
 
-        if (count($profiles) > 0) {
-            $headline = $profiles->shift();
-        } else {
-            $headline = null;
-        }
+        
 
         // news/index.blade.php ファイルを渡している
         // また View テンプレートに headline、 posts、という変数を渡している
-        return view('profile.index', ['headline' => $headline, 'profiles' => $profiles]);
+        return view('profile.index', [ 'profiles' => $profiles]);
     }
 }

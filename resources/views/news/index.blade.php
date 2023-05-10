@@ -9,11 +9,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="caption mx-auto">
-                                <div class="image">
-                                    @if ($headline->image_path)
+                                @if ($headline->image_path)
+                                 <div class="image">
+                                    
                                         <img src="{{ secure_asset('storage/image/' . $headline->image_path) }}">
-                                    @endif
+                                    
                                 </div>
+                                @endif
                                 <div class="title p-2">
                                     <h1>{{ Str::limit($headline->title, 70) }}</h1>
                                 </div>
