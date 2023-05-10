@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Profile;
 
-use App\Models\History_profile;
+use App\Models\ProfileHistory;
 use Carbon\Carbon;
 
 class ProfileController extends Controller
@@ -33,7 +33,18 @@ class ProfileController extends Controller
 
         return redirect('admin/profile/create');
     }
- 
+    
+    public function index(Request $request)
+    {
+        $cond_name = $request->cond_name;
+        if ($cond_name != '') {
+            $profiles = Profile::where('name', $cond_name)->get();
+        } else {
+            $profiles = Profile::all();
+        }
+        return view('admin.profile.index', ['profiles' => $profiles, 'cond_name' => $cond_name]);
+    }
+    
     // 以下を追記
     public function edit (Request $request)
     {
@@ -51,18 +62,20 @@ class ProfileController extends Controller
         $this->validate($request, Profile::$rules);
         // News Modelからデータを取得する
         $profile = Profile::find($request->id);
+        
         // 送信されてきたフォームデータを格納する
         $profile_form = $request->all();
+        
+        unset($profile_form['remove']);
         unset($profile_form['_token']);
-         
-        // 該当するデータを上書きして保存する
+        
         $profile->fill($profile_form)->save();
         
         // 以下を追記
-        $History_profile = new History_profile();
-        $History_profile->History_profile_id = $profile->id;
-        $History_profile->edited_at = Carbon::now();
-        $History_profile->save();
+        $profileHistory = new ProfileHistory();
+        $profileHistory->profile_id = $profile->id;
+        $profileHistory->edited_at = Carbon::now();
+        $profileHistory->save();
 
         return redirect('admin/profile');
     }
@@ -76,6 +89,6 @@ class ProfileController extends Controller
         // 削除する
         $profile->delete();
 
-        return redirect('admin/profile/');
+        return redirect('admin/profile');
     }
 }

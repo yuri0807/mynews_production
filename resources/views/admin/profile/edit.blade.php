@@ -31,16 +31,17 @@
                           <div class="form-group row">
                         <label class="col-md-2">趣味(hobby)</label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="hobby" rows="5">{{ old('hobby') }}</textarea>
+                            <textarea class="form-control" name="hobby" rows="5">{{ $profile_form->hobby }}</textarea>
                         </div>
                     </div>
                          
                          <div class="form-group row">
                         <label class="col-md-2">自己紹介欄(introduction)</label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="introduction" rows="5">{{ old('introduction') }}</textarea>
+                            <textarea class="form-control" name="introduction" rows="5">{{ $profile_form->introduction }}</textarea>
                         </div>
                     </div>
+                            <input type="hidden" name="id" value="{{ $profile_form->id }}">
                             @csrf
                             <input type="submit" class="btn btn-primary" value="更新">
                         </div>
@@ -50,9 +51,9 @@
                     <div class="col-md-4 mx-auto">
                         <h2>編集履歴</h2>
                         <ul class="list-group">
-                            @if ($profile_form->profile_histories != NULL)
-                                @foreach ($profile_form->profile_histories as $profile_histories)
-                                    <li class="list-group-item">{{ $profile_histories->edited_at }}</li>
+                            @if ($profile_form->profilehistories != NULL)
+                                @foreach ($profile_form->profilehistories as $profileHistory)
+                                    <li class="list-group-item">{{ $profileHistory->edited_at }}</li>
                                 @endforeach
                             @endif
                         </ul>

@@ -17,8 +17,8 @@ protected $guarded = array('id');
         'hobby' => 'required',
         'introduction' => 'required',
     );
-    public function History_profile()
+    public function profilehistories()
     {
-        return $this->hasMany('App\Models\History_profile');
+        return $this->hasMany('App\Models\ProfileHistory');
     }
 }
